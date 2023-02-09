@@ -1,21 +1,25 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import About from './pages/About';
-import Products from './pages/Products';
-import Error from './pages/Error';
-import Home from './pages/Home';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
+import RootLayout from './layout/RootLayout'
+import About from './pages/About'
+import Error from './pages/Error'
+import Home from './pages/Home'
+import Products from './pages/Products'
 
 function App() {
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='/' element={<RootLayout/>}>
+        <Route index element={<Home/>}/>
+        <Route path='about' element={<About />} />
+        <Route path='products' element={<Products />} />
+        <Route path='*' element={<Error />} />
+      </Route>
+    )
+  )
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} >
-          <Route path='about' element={<About />} />
-          <Route path='products' element={<Products />} />
-          <Route path='*' element={<Error />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+    <RouterProvider router={router}/>
+  )
+
 }
 
-export default App;
+export default App
